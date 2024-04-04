@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com'; 
 
 // Utility to add JWT
 const setAuthHeader = (token) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  axios.defaults.headers.common[('Authorization')] = `Bearer ${token}`;
 };
 
 // Utility to remove JWT
@@ -57,9 +57,10 @@ export const logIn = createAsyncThunk(
  */
 export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    await axios.post('/users/logout');
+    const response = await axios.post('/users/logout');
     // After a successful logout, remove the token from the HTTP header
     clearAuthHeader();
+    return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -75,14 +76,9 @@ export const refreshUser = createAsyncThunk(
     // Reading the token from the state via getState()
     const reduxState = thunkAPI.getState();
     const persistedToken = reduxState.auth.token;
-
-    try {
       setAuthHeader(persistedToken);
       const response = await axios.get('/users/current');
       return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
   },
   {
     condition:(_, {getState}) => {

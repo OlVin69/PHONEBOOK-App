@@ -4,6 +4,7 @@ import { useId } from 'react';
 import { logIn } from '../../../redux/auth/operations';
 import css from './LoginForm.module.css';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 export default function LoginForm()  {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export default function LoginForm()  {
   const handleSubmit = (values, action) => {
     dispatch(logIn(values)).unwrap()
     .then(() => {
+      
       toast.success('login success');
     })
     .catch(() => {
@@ -40,6 +42,12 @@ export default function LoginForm()  {
         <Field type='password' name='password' id={passwordId} />
         </label>
         <button type="submit">Log In</button>
+        <div className={css.registerCont}>
+          <p>or</p>
+          <Link to="/register" >
+            register
+          </Link>
+        </div>
       </Form>
     </Formik>
   );

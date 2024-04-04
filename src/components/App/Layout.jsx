@@ -1,15 +1,12 @@
-import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import  AppBar  from './AppBar/AppBar';
 
-export default function Layout ()  {
+import { Toaster } from 'react-hot-toast';
+import  AppBar  from '../App/AppBar/AppBar';
+
+export default function Layout ({children})  {
   return (
     <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 16px' }}>
       <AppBar />
-      <Suspense fallback={null}>
-        <Outlet />
-      </Suspense>
+      {children}
       <Toaster position="top-right" reverseOrder={false} />
     </div>
   );

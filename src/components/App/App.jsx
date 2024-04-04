@@ -1,5 +1,5 @@
 
-import { useEffect, lazy} from 'react';
+import {Suspense, lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Layout from '../App/Layout';
@@ -9,6 +9,7 @@ import { refreshUser } from '../../redux/auth/operations';
 import  useAuth  from '../../hooks/useAuth';
 
 import './App.css';
+import { Toaster } from 'react-hot-toast';
 
 const HomePage = lazy(() => import('../../pages/Home'));
 const RegisterPage = lazy(() => import('../../pages/Register'));
@@ -27,10 +28,11 @@ export default function App() {
 
   return isRefreshing ? (
     <b>Refreshing user, please wait...</b>
-  ) : (  
+  ) : (<Layout>
+        <Suspense fallback={null}>
          <Routes>
-         <Route path="/" element={<Layout />}>
-           <Route index element={<HomePage />} />
+         
+           <Route path="/" element={<HomePage />} />
             <Route
                 path="/register"
                 element={
@@ -49,10 +51,11 @@ export default function App() {
                   <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
                    }
                    />
-            </Route>
+            
           </Routes>
-      
-    
+        </Suspense>
+        <Toaster/>
+      </Layout> 
   );
 }
 
