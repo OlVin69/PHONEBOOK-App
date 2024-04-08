@@ -5,6 +5,7 @@ import  useAuth  from '../../../hooks/useAuth';
 import css from './AppBar.module.css';
 
 
+
 export default function AppBar  ()  {
   const { isLoggedIn, isRefreshing } = useAuth();
   
@@ -14,6 +15,7 @@ export default function AppBar  ()  {
           <Navigation/>
           {!isRefreshing && <div>{isLoggedIn ? <UserMenu /> : <AuthNav />}</div>}
     </header>
+    
   );
 }
 

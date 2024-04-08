@@ -1,32 +1,20 @@
-import DocumentTitle from '../components/App/DocumentTitle';
-
-const styles = {
-  container: {
-    minHeight: 'calc(100vh - 50px)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontWeight: 500,
-    fontSize: 48,
-    textAlign: 'center',
-  },
-};
+import DocumentTitle from '../components/App/DocumentTitle/DocumentTitle';
 
 export default function Home() {
   return (
-    <>
-      <DocumentTitle>Home</DocumentTitle>
+    <div>
+      <DocumentTitle>
+        Phonebook welcome page{" "}
+        <span role="img" aria-label="Greeting icon">
+          💁‍♀️
+        </span>
+      </DocumentTitle>
 
-      <div style={styles.container}>
-        <h1 style={styles.title}>
-          Contact manager welcome page{' '}
-          <span role="img" aria-label="Greeting icon">
-            💁‍♀️
-          </span>
-        </h1>
-      </div>
-    </>
+      <p style={{fontSize: '24px', textAlign: 'center'}}>
+        Welcome to your personal online phonebook, where you can store and
+        manage your contacts online. To access your contact book, please either
+        register or log in.
+      </p>
+    </div>
   );
 }

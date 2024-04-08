@@ -12,7 +12,7 @@ import './App.css';
 import { Toaster } from 'react-hot-toast';
 
 const HomePage = lazy(() => import('../../pages/Home'));
-const RegisterPage = lazy(() => import('../../pages/Register'));
+const RegistrationPage = lazy(() => import('../../pages/Registration'));
 const LoginPage = lazy(() => import('../../pages/Login'));
 const ContactsPage = lazy(() => import('../../pages/Contacts'));
 
@@ -36,7 +36,7 @@ export default function App() {
             <Route
                 path="/register"
                 element={
-                  <RestrictedRoute redirectTo="/contacts" component={<RegisterPage />} />
+                  <RestrictedRoute redirectTo="/contacts" component={<RegistrationPage />} />
                    }
                    />
             <Route

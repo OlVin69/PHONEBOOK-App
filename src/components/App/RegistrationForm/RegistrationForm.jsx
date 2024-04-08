@@ -1,14 +1,22 @@
+import { Button } from '@mui/material';
 import { Formik, Form, Field } from "formik";
 import { useId } from 'react';
 import { useDispatch } from "react-redux";
+import toast from 'react-hot-toast';
 import { register } from "../../../redux/auth/operations";
-import css from './RegisterForm.module.css';
+import css from './RegistrationForm.module.css';
 
-export default function RegisterForm () {
+export default function RegistrationForm () {
     const dispatch = useDispatch()
 
     const handleSubmit = (values, action) => {
-        dispatch(register(values));
+        dispatch(register(values)).unwrap()
+        .then(() => {
+          toast.success('Registration success');
+        })
+        .catch(() => {
+          toast.error('Registration error');
+        });
         action.resetForm();
     };
 
@@ -27,19 +35,23 @@ export default function RegisterForm () {
             <Form className={css.form} autoComplete="off">
                 <label className={css.label} htmlFor={userNameId}>
                     Username
-                    <Field type="text" name="name" id={userNameId} />
+                    <Field className={css.field} type="text" name="name" id={userNameId} />
                 </label>
                 <label className={css.label} htmlFor={emailId}>
                     Email 
-                    <Field type="email" name="email" id={emailId} />
+                    <Field className={css.field} type="email" name="email" id={emailId} />
 
                 </label>
                 <label className={css.label} htmlFor={passwordId}>
                     Password
-                    <Field type="password" name="password" id={passwordId}/>
+                    <Field className={css.field} type="password" name="password" id={passwordId}/>
                 </label>
-                <button type="submit">Register</button>
+                <Button type="submit" variant="contained" color="primary">
+                   Registration
+                </Button>
             </Form>
         </Formik>
     );
  }
+
+

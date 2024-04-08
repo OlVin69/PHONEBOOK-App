@@ -1,5 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch} from "react-redux";
+import { TextField, Button } from '@mui/material';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { addContact } from '../../../redux/contacts/operations';
 import * as Yup from 'yup';
 import { useId } from 'react';
@@ -22,13 +24,18 @@ const initialValues = {
 };
 
 export default function ContactForm() {
-
   const dispatch = useDispatch();
   const nameFieldId = useId();
   const numberFieldId = useId();
 
-  const handleSubmit = ({name, number}, actions) => {
-    dispatch(addContact({name, number}));
+  const handleSubmit = ({ name, number }, actions) => {
+    dispatch(addContact({ name, number })).unwrap()
+    .then(() => {
+      toast.success('New contact add success');
+    })
+    .catch(() => {
+      toast.error('New contact add error');
+    });
     actions.resetForm();
   };
 
@@ -44,10 +51,12 @@ export default function ContactForm() {
             Name
           </label>
           <Field
+            as={TextField}
             className={css.field}
             type="text"
             name="name"
             id={nameFieldId}
+            fullWidth
           />
           <ErrorMessage className={css.error} name="name" as="span" />
         </div>
@@ -56,17 +65,19 @@ export default function ContactForm() {
             Number
           </label>
           <Field
+            as={TextField}
             className={css.field}
             type="text"
             name="number"
             id={numberFieldId}
+            fullWidth
           />
           <ErrorMessage className={css.error} name="number" as="span" />
         </div>
 
-        <button className={css.button} type="submit">
+        <Button className={css.button} type="submit" variant="outlined" color="primary">
           Add contact
-        </button>
+        </Button>
       </Form>
     </Formik>
   );
